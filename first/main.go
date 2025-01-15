@@ -35,4 +35,33 @@ func main() { // основная функция приложения
 	s, d, g := 1, 2, 3
 	s, d = d, s
 	fmt.Println(s, d, g)
+
+	messageFromFunc := sayHello("Maksim", 34)
+	printMessage("Вызов 1")
+	printMessage("Вызов 2")
+	printMessage("Вызов 3")
+	printMessage(messageFromFunc)
+
+	mes, entered := enterTheClub(19)
+	fmt.Println(mes)
+	fmt.Println(entered)
+
+}
+
+func printMessage(message string) {
+	fmt.Println(message)
+}
+
+func sayHello(name string, age int) string {
+	return fmt.Sprintf("Привет, %s! Тебе %d лет", name, age)
+}
+
+func enterTheClub(age int) (string, bool) {
+	if age >= 18 {
+		response := "Welcome!"
+		return response, true
+	} else {
+		response := "go out"
+		return response, false
+	}
 }
