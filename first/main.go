@@ -4,7 +4,9 @@ package main // Определяет название текущего паке�
 //
 
 import (
+	"errors"
 	"fmt" // библиотека содержащая необходимы нам инструменты
+	"log"
 	"reflect"
 )
 
@@ -46,6 +48,14 @@ func main() { // основная функция приложения
 	fmt.Println(mes)
 	fmt.Println(entered)
 
+	mes2, error := enterTheClubWithErr(14)
+	if error != nil {
+		log.Fatal(error)
+		return //	Если функция ничего не возвращает и имеет return это значит, что дойдя до
+		// места где return, функция просто остоновит свое выполнение
+	}
+	fmt.Println(mes2)
+
 }
 
 func printMessage(message string) {
@@ -56,12 +66,21 @@ func sayHello(name string, age int) string {
 	return fmt.Sprintf("Привет, %s! Тебе %d лет", name, age)
 }
 
+// Множественные возвращаемые значения
 func enterTheClub(age int) (string, bool) {
 	if age >= 18 {
-		response := "Welcome!"
-		return response, true
-	} else {
-		response := "go out"
-		return response, false
+		return "Welcome", true
 	}
+	return "Go out", false
+}
+
+func enterTheClubWithErr(age int) (string, error) {
+	if age >= 18 && age < 45 {
+		return "Welcome", nil
+	} else if age >= 45 && age < 65 {
+		return "This music for not for you", nil
+	} else if age >= 65 {
+		return "You are old", errors.New("Vwry old man")
+	}
+	return "Go out", errors.New("Very young")
 }
